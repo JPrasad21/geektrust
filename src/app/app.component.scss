@@ -1,0 +1,7 @@
+.appWrapper {
+  display: grid;
+  grid-auto-rows: 60px 0 1fr 50px;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}

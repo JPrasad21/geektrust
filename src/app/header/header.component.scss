@@ -1,0 +1,36 @@
+@import 'src/assets/styles/variables.scss';
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 40px;
+  height: 100%;
+  background: #fff;
+  border-bottom: 1px solid #bbbbbb;
+  .title-wrapper {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    .title-wrapper__logo {
+      width: 40px;
+      height: 40px;
+      margin-right: 15px;
+    }
+    .title-wrapper__name {
+      font-size: 16px;
+      color: $primary;
+      font-weight: 700;
+    }
+  }
+  .nav-wrapper {
+    display: flex;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    gap: 40px;
+    li {
+      color: $primary;
+      cursor: pointer;
+    }
+  }
+}

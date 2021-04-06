@@ -1,0 +1,14 @@
+@import 'src/assets/styles/variables.scss';
+.footer {
+  height: 100%;
+  padding: 0 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: $footer;
+  .footer__text {
+    color: white;
+    font-size: 14px;
+    font-weight: 600;
+  }
+}

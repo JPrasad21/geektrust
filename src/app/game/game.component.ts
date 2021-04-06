@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { GameService } from './game.service';
 
 @Component({
   selector: 'app-game',
@@ -7,9 +8,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class GameComponent implements OnInit {
 
-  constructor() { }
+  planets: any[] = [];
+  constructor(private gameService: GameService) { }
 
   ngOnInit(): void {
+    this.getPlanets();
   }
+
+  getPlanets() {
+  this.gameService.getPlanets().subscribe(res => {
+    this.planets = res as any;
+  }, err => {
+    console.log(err);
+  })
+}
 
 }

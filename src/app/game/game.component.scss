@@ -1,0 +1,113 @@
+@import 'src/assets/styles/variables.scss';
+.main-section-wrapper {
+  width: 100%;
+  height: 100%;
+  overflow: hidden auto;
+  background: $white-2;
+  .main-section {
+    max-width: 1280px;
+    margin: auto;
+    height: 100%;
+    .overview {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      .overview__search-text {
+
+      }
+      .overview__time-taken {
+
+      }
+    }
+    .planets {
+      display: grid;
+      grid-template-columns: repeat(3,minmax(0,1fr));
+      grid-row-gap: 20px;
+      grid-column-gap: 20px;
+      .planet {
+        height: 220px;
+        background: $white-1;
+        box-shadow: $shadow1;
+        .planet-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          border-bottom: 1px solid $white-11;
+          padding: 20px;
+          height: 80px;
+          .planet-header-info-wrapper {
+            .planet-header-info {
+              display: flex;
+              align-items: center;
+              margin-bottom: 5px;
+              .planet-header-info__name {
+                margin: 0;
+                color: $font-text-1;
+                font-weight: 600;
+                margin-right: 10px;
+              }
+              .planet-header-info__selected {
+                height: 14px;
+              }
+            }
+            .planet-header-info__distance {
+              margin: 0;
+              font-size: 14px;
+              color: $font-text-2;
+            }
+          }
+          .planet-header-action {
+            width: 100px;
+            text-align: right;
+          }
+        }
+        .space-section {
+          padding: 20px;
+          height: 140px;
+          .vehicle-dropdown {
+            display: block;
+            border: 1px solid rgba(0,0,0,.12);
+            padding: 10px;
+            border-radius: 4px;
+          }
+          .space-section-info {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            margin-top: 15px;
+            .space-section-info__speed {
+
+            }
+            .space-section-info__time {
+
+            }
+          }
+        }
+        .space-skeleton {
+          padding: 20px;
+          display: flex;
+          min-height: 100px;
+          align-items: center;
+          box-sizing: border-box;
+          height: 140px;
+          img {
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+          }
+          p {
+            color: $font-text-3;
+            font-size: 14px;
+            text-align: center;
+            margin: 0;
+          }
+        }
+      }
+    }
+  }
+}
+
+::ng-deep .mat-form-field {
+  height: 50px;
+  padding: 0;
+}

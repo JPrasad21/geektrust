@@ -1,6 +1,9 @@
-# Geektrust
+# Geektrust - Finding Falcone
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.2.7.
+
+## Setup
+Run `npm install` to install all the dependent packages.
 
 ## Development server
 

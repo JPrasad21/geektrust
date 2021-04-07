@@ -5,6 +5,7 @@ import {MatSelectChange} from '@angular/material/select';
 import { Router } from '@angular/router';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { SnackbarService } from '../services/snackbar/snackbar.service';
 @Component({
   selector: 'app-game',
   templateUrl: './game.component.html',
@@ -22,7 +23,7 @@ export class GameComponent implements OnInit, OnDestroy {
 
   destroy$ = new Subject<void>();
 
-  constructor(private gameService: GameService, private router: Router) {
+  constructor(private gameService: GameService, private router: Router, private snackBarService: SnackbarService) {
     this.gameService.reset$.pipe(takeUntil(this.destroy$)).subscribe(x => {
       if(x) this.setDefaultData();
     })
@@ -40,6 +41,7 @@ export class GameComponent implements OnInit, OnDestroy {
     this.planetsModel = this.gameService.cloneObject(this.planetList);
     this.remaningVehicles = this.gameService.cloneObject(this.vehicles);
     this.overAllTimeTaken = 0;
+    this.snackBarService.openSnackBar('Reset done successfully.', false);
   }
 
   getPlanets() {
@@ -47,7 +49,7 @@ export class GameComponent implements OnInit, OnDestroy {
       this.planetList = res;
       this.planetsModel = this.gameService.cloneObject(res);
     }, err => {
-      console.log(err);
+      this.snackBarService.openSnackBar('Something went wrong!', true);
     })
   }
 
@@ -56,7 +58,7 @@ export class GameComponent implements OnInit, OnDestroy {
       this.vehicles = res;
       this.remaningVehicles = this.gameService.cloneObject(res);
     }, err => {
-      console.log(err);
+      this.snackBarService.openSnackBar('Something went wrong!', true);
     })
   }
 
@@ -65,7 +67,7 @@ export class GameComponent implements OnInit, OnDestroy {
     if(planet.isSelected || selectedPlanets.length < 4)
       planet.isSelected = !planet.isSelected;
     else
-      console.log('Maximum of 4 planets can be selected');
+      this.snackBarService.openSnackBar('Only 4 planets can be selected', true);
   }
 
   onVehicleSelection(e: MatSelectChange, planet: PlanetsViewModel) {
@@ -76,7 +78,7 @@ export class GameComponent implements OnInit, OnDestroy {
       planet.timeTaken = planet.distance / vehicle.speed;
       this.overAllTimeTaken = this.planetsModel.reduce((a, c) => a+= c.timeTaken ? c.timeTaken : 0, 0);
     } else {
-      console.log('Vehicle cannot travel this distance');
+      this.snackBarService.openSnackBar('Selected vehicle cannot travel this distance', true);
       planet.selectedVehicle = null;
     }
 
@@ -102,7 +104,7 @@ export class GameComponent implements OnInit, OnDestroy {
 
     const selectedPlanetsWithVehicles = this.planetsModel.filter(x => x.isSelected && x.selectedVehicle != null)
     if(selectedPlanetsWithVehicles.length != 4) {
-      console.log('Choose 4 planets & vehicles to search')
+      this.snackBarService.openSnackBar('Please select 4 planets with vehicles to search', true);
     } else {
       this.findFalconeLoading = true;
       this.gameService.getToken().subscribe(res => {

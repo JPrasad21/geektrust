@@ -1,4 +1,5 @@
 @import '@angular/material/prebuilt-themes/indigo-pink.css';
+@import 'src/assets/styles/variables.scss';
 html, body {
   height: 100%;
   width: 100%;
@@ -7,4 +8,17 @@ html, body {
 }
 * {
   box-sizing: border-box;
+}
+
+.snackbar-wrapper-success {
+  background: $success;
+  color: $white-1;
+  font-size: 16px;
+  font-weight: 600;
+}
+.snackbar-wrapper-error {
+  background: $error;
+  color: $white-1;
+  font-size: 16px;
+  font-weight: 600;
 }

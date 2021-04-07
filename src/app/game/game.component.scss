@@ -11,12 +11,27 @@
     .overview {
       display: flex;
       justify-content: space-between;
-      margin-bottom: 20px;
-      .overview__search-text {
-
+      margin: 20px 0;
+      .overview__text {
+        font-size: 16px;
+        color: $font-text-3;
       }
-      .overview__time-taken {
-
+      .overview-time-wrapper {
+        display: flex;
+        align-items: center;
+        img {
+          width: 18px;
+          height: 18px;
+          margin-right: 10px;
+        }
+        .overview__timetaken {
+          font-size: 16px;
+          color: $font-text-3;
+          .overview__timetaken-value {
+            color: $font-text-1;
+            font-weight: 600;
+          }
+        }
       }
     }
     .planets {
@@ -79,10 +94,20 @@
             width: 100%;
             margin-top: 15px;
             .space-section-info__speed {
-
+              font-size: 14px;
+              color: $font-text-3;
+              .space-section-info__speed-value {
+                color: $font-text-1;
+                font-weight: 600;
+              }
             }
             .space-section-info__time {
-
+              font-size: 14px;
+              color: $font-text-3;
+              .space-section-info__time-value {
+                color: $font-text-1;
+                font-weight: 600;
+              }
             }
           }
         }
@@ -105,6 +130,9 @@
             margin: 0;
           }
         }
+      }
+      .planetSelected {
+        border: 1px solid $white-12;
       }
     }
     .find-falcone {

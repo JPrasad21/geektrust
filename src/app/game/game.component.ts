@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Planets, PlanetsViewModel, Vehicles } from '../typings/falcone';
+import { FindFalconeRequest, Planets, PlanetsViewModel, Vehicles } from '../typings/falcone';
 import { GameService } from './game.service';
 import {MatSelectChange} from '@angular/material/select';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-game',
   templateUrl: './game.component.html',
@@ -15,8 +16,9 @@ export class GameComponent implements OnInit {
   planetsModel: PlanetsViewModel[] = [];
   remaningVehicles: Vehicles[] = [];
   overAllTimeTaken = 0;
+  findFalconeLoading = false
 
-  constructor(private gameService: GameService) { }
+  constructor(private gameService: GameService, private router: Router) { }
 
   ngOnInit(): void {
     this.getPlanets();
@@ -76,6 +78,33 @@ export class GameComponent implements OnInit {
       if(prevVehicle && vehicle.name === prevVehicle.name) {
         vehicle.total_no +=1;
       }
+    }
+  }
+
+  searchFalcone() {
+
+    const selectedPlanetsWithVehicles = this.planetsModel.filter(x => x.isSelected && x.selectedVehicle != null)
+    if(selectedPlanetsWithVehicles.length != 4) {
+      console.log('Choose 4 planets & vehicles to search')
+    } else {
+      this.findFalconeLoading = true;
+      this.gameService.getToken().subscribe(res => {
+        const query: FindFalconeRequest = {
+          token: res.token,
+          planet_names: selectedPlanetsWithVehicles.map(x => x.name),
+          vehicle_names: selectedPlanetsWithVehicles.map(x => x.selectedVehicle.name)
+        }
+        this.gameService.findFalcone(query).subscribe(res => {
+          console.log(res);
+          this.findFalconeLoading = false;
+          this.router.navigate(['/result']);
+
+        }, err => {
+          console.log(err);
+        })
+      }, err => {
+
+      })
     }
   }
 }

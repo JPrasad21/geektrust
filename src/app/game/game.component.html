@@ -23,13 +23,13 @@
               <mat-select-trigger>
                 {{planet.selectedVehicle ? planet.selectedVehicle.name : 'Select vehicle'}}
               </mat-select-trigger>
-              <input class="vehicle-dropdown__search" type="text"/>
+              <input class="vehicle-dropdown__search" type="text" placeholder="search"/>
               <mat-option *ngFor="let option of remaningVehicles" [value]="option" [disabled]="option.total_no === 0">
-                  {{option.name + '(' + option.total_no + ')' }}
+                  {{option.name + ' - (' + option.total_no + ') - ' + option.max_distance + 'Megamiles' }}
               </mat-option>
             </mat-select>
             <div *ngIf="planet.selectedVehicle" class="space-section-info">
-              <p class="space-section-info__speed">{{'Speed: ' + planet.selectedVehicle.speed + 'mm/h'}}</p>
+              <p class="space-section-info__speed">{{'Speed: ' + planet.selectedVehicle.speed + 'Mm/h'}}</p>
               <p class="space-section-info__time">{{'Time Taken: ' + planet.timeTaken + 'h'}}</p>
             </div>
         </div>
@@ -39,8 +39,16 @@
         </div>
       </div>
     </div>
+    <div class="find-falcone">
+      <button class="find-falcone__btn" mat-flat-button color="primary" (click)="searchFalcone()">
+        Search Falcone
+        <mat-icon *ngIf="findFalconeLoading">
+          <mat-spinner color="accent" diameter="20"></mat-spinner>
+        </mat-icon>
+      </button>
+    </div>
   </div>
   <div *ngIf="!planetsModel.length" class="loading">
-    Loading...
+      <mat-spinner color="primary" diameter="50"></mat-spinner>
   </div>
 </div>

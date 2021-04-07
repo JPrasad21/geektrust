@@ -1,14 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FindFalconeRequest, Planets, PlanetsViewModel, Vehicles } from '../typings/falcone';
 import { GameService } from './game.service';
 import {MatSelectChange} from '@angular/material/select';
 import { Router } from '@angular/router';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 @Component({
   selector: 'app-game',
   templateUrl: './game.component.html',
   styleUrls: ['./game.component.scss']
 })
-export class GameComponent implements OnInit {
+export class GameComponent implements OnInit, OnDestroy {
 
   planetList: Planets[] = [];
   vehicles: Vehicles[] = [];
@@ -16,19 +18,34 @@ export class GameComponent implements OnInit {
   planetsModel: PlanetsViewModel[] = [];
   remaningVehicles: Vehicles[] = [];
   overAllTimeTaken = 0;
-  findFalconeLoading = false
+  findFalconeLoading = false;
 
-  constructor(private gameService: GameService, private router: Router) { }
+  destroy$ = new Subject<void>();
+
+  constructor(private gameService: GameService, private router: Router) {
+    this.gameService.reset$.pipe(takeUntil(this.destroy$)).subscribe(x => {
+      if(x) this.setDefaultData();
+    })
+  }
 
   ngOnInit(): void {
     this.getPlanets();
     this.getVehicles();
   }
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+  setDefaultData() {
+    this.planetsModel = this.gameService.cloneObject(this.planetList);
+    this.remaningVehicles = this.gameService.cloneObject(this.vehicles);
+    this.overAllTimeTaken = 0;
+  }
 
   getPlanets() {
     this.gameService.getPlanets().subscribe(res => {
       this.planetList = res;
-      this.planetsModel = res as PlanetsViewModel[];
+      this.planetsModel = this.gameService.cloneObject(res);
     }, err => {
       console.log(err);
     })
@@ -37,7 +54,7 @@ export class GameComponent implements OnInit {
   getVehicles() {
     this.gameService.getVehicles().subscribe(res => {
       this.vehicles = res;
-      this.remaningVehicles = res;
+      this.remaningVehicles = this.gameService.cloneObject(res);
     }, err => {
       console.log(err);
     })
@@ -97,7 +114,12 @@ export class GameComponent implements OnInit {
         this.gameService.findFalcone(query).subscribe(res => {
           console.log(res);
           this.findFalconeLoading = false;
-          this.router.navigate(['/result']);
+          if(res.status === 'success' || res.status === 'false') {
+            this.gameService.falconeSearchResult = res;
+            this.router.navigate(['/result']);
+          } else {
+            console.log(res.error);
+          }
 
         }, err => {
           console.log(err);

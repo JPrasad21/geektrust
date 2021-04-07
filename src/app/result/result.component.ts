@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { GameService } from '../game/game.service';
+import { FindFalconeResponse } from '../typings/falcone';
 
 @Component({
   selector: 'app-result',
@@ -7,9 +10,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ResultComponent implements OnInit {
 
-  constructor() { }
+  falconeSearchResult: FindFalconeResponse;
+  constructor(private gameService: GameService,private router: Router) { }
 
   ngOnInit(): void {
+    this.falconeSearchResult = this.gameService.falconeSearchResult;
+    if(!this.falconeSearchResult) this.restart();
+  }
+
+  restart() {
+    this.router.navigate(['/']);
   }
 
 }

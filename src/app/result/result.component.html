@@ -1,1 +1,13 @@
-<p>result works!</p>
+<div class="result-section" *ngIf="falconeSearchResult">
+  <div class="result" *ngIf="falconeSearchResult.status === 'success'">
+      <p>{{'Falcone is hiding in ' + falconeSearchResult.planet_name }}</p>
+  </div>
+  <div class="result" *ngIf="falconeSearchResult.status === 'false'">
+    <p>{{'Oops! Falcone is not hiding in the selected planets. :('}}</p>
+  </div>
+  <div class="find-falcone">
+    <button class="find-falcone__btn" mat-flat-button color="primary" (click)="restart()">
+      Restart
+    </button>
+  </div>
+</div>

@@ -4,6 +4,6 @@
     <span class="title-wrapper__name">Finding Falcone</span>
   </div>
   <ul class="nav-wrapper">
-    <li (click)="resetData()">Reset</li>
+    <li *ngIf="router.url === '/'" (click)="resetData()">Reset</li>
   </ul>
 </div>

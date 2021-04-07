@@ -1,13 +1,18 @@
-<div class="result-section" *ngIf="falconeSearchResult">
-  <div class="result" *ngIf="falconeSearchResult.status === 'success'">
-      <p>{{'Falcone is hiding in ' + falconeSearchResult.planet_name }}</p>
-  </div>
-  <div class="result" *ngIf="falconeSearchResult.status === 'false'">
-    <p>{{'Oops! Falcone is not hiding in the selected planets. :('}}</p>
-  </div>
-  <div class="find-falcone">
-    <button class="find-falcone__btn" mat-flat-button color="primary" (click)="restart()">
-      Restart
-    </button>
+<div class="result-section-wrapper">
+  <div class="result-section" *ngIf="falconeSearchResult">
+    <div class="result" *ngIf="falconeSearchResult.status === 'success'">
+        <img [src]="'assets/images/success.svg'"/>
+        <p>{{'Success! Falcone is hiding in ' + falconeSearchResult.planet_name }}</p>
+    </div>
+    <div class="result" *ngIf="falconeSearchResult.status === 'false'">
+      <img [src]="'assets/images/sad.svg'"/>
+      <p>{{'Oops! Falcone is not hiding in the selected planets.'}}</p>
+    </div>
+    <div class="find-falcone">
+      <button class="find-falcone__btn" mat-flat-button color="primary" (click)="restart()">
+        Restart
+      </button>
+    </div>
   </div>
 </div>
+

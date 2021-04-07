@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { GameService } from '../game/game.service';
 
 @Component({
@@ -8,7 +9,7 @@ import { GameService } from '../game/game.service';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor(private gameService: GameService) { }
+  constructor(private gameService: GameService, public router: Router) { }
 
   ngOnInit(): void {
   }

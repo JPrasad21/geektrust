@@ -57,15 +57,12 @@
                   : "Select vehicle"
               }}
             </mat-select-trigger>
-            <input
-              class="vehicle-dropdown__search"
-              type="text"
-              placeholder="search"
-            />
             <mat-option
               *ngFor="let option of remainingVehicles"
               [value]="option"
-              [disabled]="option.total_no === 0"
+              [disabled]="
+                option.total_no === 0 || option.max_distance < planet.distance
+              "
             >
               {{
                 option.name +

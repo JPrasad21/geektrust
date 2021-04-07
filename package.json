@@ -9,8 +9,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "predeploy": "ng build --prod --base-href http://jprasad21.github.io/geektrust/",
-    "deploy": "gh-pages -d dist/geektrust"
+    "deploy": "ng build --prod --output-path docs --base-href /geektrust/"
   },
   "private": true,
   "dependencies": {

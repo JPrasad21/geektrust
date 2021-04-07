@@ -1,13 +1,38 @@
 @import 'src/assets/styles/variables.scss';
+
+
+@media (min-width: 575.98px)  {
+  .planets {
+    grid-template-columns: repeat(1,minmax(0,1fr));
+  }
+}
+@media (min-width: 576px) and (max-width: 767.98px) {
+  .planets {
+    grid-template-columns: repeat(2,minmax(0,1fr));
+  }
+}
+@media (min-width: 768px) and (max-width: 991.98px) {
+  .planets {
+    grid-template-columns: repeat(2,minmax(0,1fr));
+  }
+}
+@media (min-width: 992px) {
+  .planets {
+    grid-template-columns: repeat(3,minmax(0,1fr));
+  }
+}
+
+
 .main-section-wrapper {
   width: 100%;
-  height: 100%;
+  height: calc(100vh - 110px);
   background: $white-2;
   .main-section {
     max-width: 1280px;
     margin: auto;
     height: 100%;
     overflow: hidden auto;
+    padding: 0 15px;
     .overview {
       display: flex;
       justify-content: space-between;
@@ -19,6 +44,7 @@
       .overview-time-wrapper {
         display: flex;
         align-items: center;
+        justify-content: flex-end;
         img {
           width: 18px;
           height: 18px;
@@ -27,6 +53,7 @@
         .overview__timetaken {
           font-size: 16px;
           color: $font-text-3;
+          width: max-content;
           .overview__timetaken-value {
             color: $font-text-1;
             font-weight: 600;
@@ -36,7 +63,7 @@
     }
     .planets {
       display: grid;
-      grid-template-columns: repeat(3,minmax(0,1fr));
+      // grid-template-columns: repeat(3,minmax(0,1fr));
       grid-row-gap: 20px;
       grid-column-gap: 20px;
       .planet {
@@ -137,6 +164,7 @@
     }
     .find-falcone {
       margin-top: 40px;
+      margin-bottom: 20px;
       text-align: center;
       .find-falcone__btn {
         font-weight: 600;

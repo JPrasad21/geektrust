@@ -89,7 +89,7 @@ export class GameComponent implements OnInit, OnDestroy {
   }
 
   updateRemainingVehicles(selectedVehicle: Vehicles, prevVehicle: Vehicles) {
-    for (let i = 0; i < this.remainingVehicles.length; i--) {
+    for (let i = 0; i < this.remainingVehicles.length; i++) {
       const vehicle = this.remainingVehicles[i];
       if (vehicle.name === selectedVehicle.name) {
         if (vehicle.total_no > 0) vehicle.total_no -= 1;

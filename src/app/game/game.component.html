@@ -3,56 +3,108 @@
     <div class="overview">
       <p class="overview__text">Select the planets you want to search in:</p>
       <div class="overview-time-wrapper">
-        <img [src]="'assets/images/clock.svg'"/>
-        <p class="overview__timetaken">Overall Time Taken: <span class="overview__timetaken-value">{{overAllTimeTaken + 'h'}}</span></p>
+        <img [src]="'assets/images/clock.svg'" />
+        <p class="overview__timetaken">
+          Overall Time Taken:
+          <span class="overview__timetaken-value">{{
+            overAllTimeTaken + "h"
+          }}</span>
+        </p>
       </div>
     </div>
     <div class="planets">
-      <div class="planet" *ngFor="let planet of planetsModel"
-      [ngClass]="{
-        planetSelected: planet.isSelected
-      }">
+      <div
+        class="planet"
+        *ngFor="let planet of planetsModel"
+        [ngClass]="{
+          planetSelected: planet.isSelected
+        }"
+      >
         <div class="planet-header">
           <div class="planet-header-info-wrapper">
             <div class="planet-header-info">
-              <p class="planet-header-info__name">{{planet.name}}</p>
-              <img class="planet-header-info__selected" *ngIf="planet.isSelected" [src]="'assets/images/selected.svg'"/>
+              <p class="planet-header-info__name">{{ planet.name }}</p>
+              <img
+                class="planet-header-info__selected"
+                *ngIf="planet.isSelected"
+                [src]="'assets/images/selected.svg'"
+              />
             </div>
-            <p class="planet-header-info__distance">{{'Distance: ' + planet.distance + ' Megamiles'}}</p>
+            <p class="planet-header-info__distance">
+              {{ "Distance: " + planet.distance + " Megamiles" }}
+            </p>
           </div>
           <div class="planet-header-action">
-            <button mat-stroked-button color="primary" (click)="onPlanetSelect(planet)">{{planet.isSelected ?  'Unselect' : 'Select'}}</button>
+            <button
+              mat-stroked-button
+              color="primary"
+              (click)="onPlanetSelect(planet)"
+            >
+              {{ planet.isSelected ? "Unselect" : "Select" }}
+            </button>
           </div>
         </div>
         <div *ngIf="planet.isSelected" class="space-section">
-            <mat-select class="vehicle-dropdown" placeholder="Select vehicle" (selectionChange)="onVehicleSelection($event, planet)">
-              <mat-select-trigger>
-                {{planet.selectedVehicle ? planet.selectedVehicle.name : 'Select vehicle'}}
-              </mat-select-trigger>
-              <input class="vehicle-dropdown__search" type="text" placeholder="search"/>
-              <mat-option *ngFor="let option of remaningVehicles" [value]="option" [disabled]="option.total_no === 0">
-                  {{option.name + ' - (' + option.total_no + ') - ' + option.max_distance + ' Megamiles' }}
-              </mat-option>
-            </mat-select>
-            <div *ngIf="planet.selectedVehicle" class="space-section-info">
-              <p class="space-section-info__speed">
-                Speed:
-                <span class="space-section-info__speed-value">{{planet.selectedVehicle.speed + 'Mm/h'}}</span>
-              </p>
-              <p class="space-section-info__time">
-                Time Taken:
-                <span class="space-section-info__time-value">{{planet.timeTaken + 'h'}}</span>
-              </p>
-            </div>
+          <mat-select
+            class="vehicle-dropdown"
+            placeholder="Select vehicle"
+            (selectionChange)="onVehicleSelection($event, planet)"
+          >
+            <mat-select-trigger>
+              {{
+                planet.selectedVehicle
+                  ? planet.selectedVehicle.name
+                  : "Select vehicle"
+              }}
+            </mat-select-trigger>
+            <input
+              class="vehicle-dropdown__search"
+              type="text"
+              placeholder="search"
+            />
+            <mat-option
+              *ngFor="let option of remaningVehicles"
+              [value]="option"
+              [disabled]="option.total_no === 0"
+            >
+              {{
+                option.name +
+                  " - (" +
+                  option.total_no +
+                  ") - " +
+                  option.max_distance +
+                  " Megamiles"
+              }}
+            </mat-option>
+          </mat-select>
+          <div *ngIf="planet.selectedVehicle" class="space-section-info">
+            <p class="space-section-info__speed">
+              Speed:
+              <span class="space-section-info__speed-value">{{
+                planet.selectedVehicle.speed + "Mm/h"
+              }}</span>
+            </p>
+            <p class="space-section-info__time">
+              Time Taken:
+              <span class="space-section-info__time-value">{{
+                planet.timeTaken + "h"
+              }}</span>
+            </p>
+          </div>
         </div>
         <div *ngIf="!planet.isSelected" class="space-skeleton">
-          <img [src]="'assets/images/no-planet-selected.svg'"/>
+          <img [src]="'assets/images/no-planet-selected.svg'" />
           <p>Select the planet to view the available vehicles</p>
         </div>
       </div>
     </div>
     <div class="find-falcone">
-      <button class="find-falcone__btn" mat-flat-button color="primary" (click)="searchFalcone()">
+      <button
+        class="find-falcone__btn"
+        mat-flat-button
+        color="primary"
+        (click)="searchFalcone()"
+      >
         Search Falcone
         <mat-icon *ngIf="findFalconeLoading">
           <mat-spinner color="accent" diameter="20"></mat-spinner>
@@ -61,6 +113,6 @@
     </div>
   </div>
   <div *ngIf="!planetsModel.length" class="loading">
-      <mat-spinner color="primary" diameter="50"></mat-spinner>
+    <mat-spinner color="primary" diameter="50"></mat-spinner>
   </div>
 </div>

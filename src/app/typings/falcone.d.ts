@@ -27,5 +27,5 @@ export interface FindFalconeRequest {
 export interface FindFalconeResponse {
   planet_name: string;
   status?: string;
-  error? : string;
+  error?: string;
 }

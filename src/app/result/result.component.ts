@@ -11,11 +11,11 @@ import { FindFalconeResponse } from '../typings/falcone';
 export class ResultComponent implements OnInit {
 
   falconeSearchResult: FindFalconeResponse;
-  constructor(private gameService: GameService,private router: Router) { }
+  constructor(private gameService: GameService, private router: Router) { }
 
   ngOnInit(): void {
     this.falconeSearchResult = this.gameService.falconeSearchResult;
-    if(!this.falconeSearchResult) this.restart();
+    if (!this.falconeSearchResult) this.restart();
   }
 
   restart() {

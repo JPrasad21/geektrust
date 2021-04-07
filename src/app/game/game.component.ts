@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FindFalconeRequest, Planets, PlanetsViewModel, Vehicles } from '../typings/falcone';
 import { GameService } from './game.service';
-import {MatSelectChange} from '@angular/material/select';
+import { MatSelectChange } from '@angular/material/select';
 import { Router } from '@angular/router';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
@@ -17,7 +17,7 @@ export class GameComponent implements OnInit, OnDestroy {
   vehicles: Vehicles[] = [];
 
   planetsModel: PlanetsViewModel[] = [];
-  remaningVehicles: Vehicles[] = [];
+  remainingVehicles: Vehicles[] = [];
   overAllTimeTaken = 0;
   findFalconeLoading = false;
 
@@ -25,7 +25,7 @@ export class GameComponent implements OnInit, OnDestroy {
 
   constructor(private gameService: GameService, private router: Router, private snackBarService: SnackbarService) {
     this.gameService.reset$.pipe(takeUntil(this.destroy$)).subscribe(x => {
-      if(x) this.setDefaultData();
+      if (x) this.setDefaultData();
     })
   }
 
@@ -39,7 +39,7 @@ export class GameComponent implements OnInit, OnDestroy {
   }
   setDefaultData() {
     this.planetsModel = this.gameService.cloneObject(this.planetList);
-    this.remaningVehicles = this.gameService.cloneObject(this.vehicles);
+    this.remainingVehicles = this.gameService.cloneObject(this.vehicles);
     this.overAllTimeTaken = 0;
     this.snackBarService.openSnackBar('Reset done successfully.', false);
   }
@@ -56,7 +56,7 @@ export class GameComponent implements OnInit, OnDestroy {
   getVehicles() {
     this.gameService.getVehicles().subscribe(res => {
       this.vehicles = res;
-      this.remaningVehicles = this.gameService.cloneObject(res);
+      this.remainingVehicles = this.gameService.cloneObject(res);
     }, err => {
       this.snackBarService.openSnackBar('Something went wrong!', true);
     })
@@ -64,7 +64,7 @@ export class GameComponent implements OnInit, OnDestroy {
 
   onPlanetSelect(planet: PlanetsViewModel) {
     const selectedPlanets = this.planetsModel.filter(x => x.isSelected);
-    if(planet.isSelected || selectedPlanets.length < 4)
+    if (planet.isSelected || selectedPlanets.length < 4)
       planet.isSelected = !planet.isSelected;
     else
       this.snackBarService.openSnackBar('Only 4 planets can be selected', true);
@@ -72,11 +72,11 @@ export class GameComponent implements OnInit, OnDestroy {
 
   onVehicleSelection(e: MatSelectChange, planet: PlanetsViewModel) {
     const vehicle = e.value as Vehicles;
-    if(this.canAssignVehicleToPlanet(planet, vehicle)) {
+    if (this.canAssignVehicleToPlanet(planet, vehicle)) {
       this.updateRemainingVehicles(vehicle, planet.selectedVehicle);
       planet.selectedVehicle = vehicle;
       planet.timeTaken = planet.distance / vehicle.speed;
-      this.overAllTimeTaken = this.planetsModel.reduce((a, c) => a+= c.timeTaken ? c.timeTaken : 0, 0);
+      this.overAllTimeTaken = this.planetsModel.reduce((a, c) => a += c.timeTaken ? c.timeTaken : 0, 0);
     } else {
       this.snackBarService.openSnackBar('Selected vehicle cannot travel this distance', true);
       planet.selectedVehicle = null;
@@ -89,13 +89,13 @@ export class GameComponent implements OnInit, OnDestroy {
   }
 
   updateRemainingVehicles(selectedVehicle: Vehicles, prevVehicle: Vehicles) {
-    for(let i= this.remaningVehicles.length - 1; i >= 0; i--) {
-      const vehicle = this.remaningVehicles[i];
-      if(vehicle.name === selectedVehicle.name ) {
-        if(vehicle.total_no > 0) vehicle.total_no -=1;
+    for (let i = 0; i < this.remainingVehicles.length; i--) {
+      const vehicle = this.remainingVehicles[i];
+      if (vehicle.name === selectedVehicle.name) {
+        if (vehicle.total_no > 0) vehicle.total_no -= 1;
       }
-      if(prevVehicle && vehicle.name === prevVehicle.name) {
-        vehicle.total_no +=1;
+      if (prevVehicle && vehicle.name === prevVehicle.name) {
+        vehicle.total_no += 1;
       }
     }
   }
@@ -103,7 +103,7 @@ export class GameComponent implements OnInit, OnDestroy {
   searchFalcone() {
 
     const selectedPlanetsWithVehicles = this.planetsModel.filter(x => x.isSelected && x.selectedVehicle != null)
-    if(selectedPlanetsWithVehicles.length != 4) {
+    if (selectedPlanetsWithVehicles.length !== 4) {
       this.snackBarService.openSnackBar('Please select 4 planets with vehicles to search', true);
     } else {
       this.findFalconeLoading = true;
@@ -116,7 +116,7 @@ export class GameComponent implements OnInit, OnDestroy {
         this.gameService.findFalcone(query).subscribe(res => {
           console.log(res);
           this.findFalconeLoading = false;
-          if(res.status === 'success' || res.status === 'false') {
+          if (res.status === 'success' || res.status === 'false') {
             this.gameService.falconeSearchResult = res;
             this.router.navigate(['/result']);
           } else {

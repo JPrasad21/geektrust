@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { ApiService } from '../services/api/api.service';
 import { FindFalconeRequest, FindFalconeResponse } from '../typings/falcone';
-import {MatSnackBar} from '@angular/material/snack-bar';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +19,7 @@ export class GameService {
   getVehicles() {
     return this.api.getVehicles();
   }
-  getToken(){
+  getToken() {
     return this.api.getToken();
   }
   findFalcone(query: FindFalconeRequest) {
